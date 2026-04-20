@@ -25,7 +25,7 @@ const server = http.createServer((req, res) => {
     } else if (req.url.startsWith('/pogoda')) {
         const urlParams = new URL(req.url, `http://${req.headers.host}`);
         const city = urlParams.searchParams.get('city') || 'Nieznane';
-        res.end(`<h3>Miasto: ${city}</h3><p>Temp: 12°C</p><a href="/">Wstecz</a>`);
+        res.end(`<h3>Miasto: ${city}</h3><p>Temp: 12 stopni Celsjusza</p><a href="/">Wstecz</a>`);
     }
 });
 
