@@ -37,7 +37,7 @@ Docker images - rozmiar obrazu:
 
 Docker history - warstwy:
 
-![Docker history - warstwy (8)](<Docker_history.png>)
+![Docker history - warstwy (10)](<Docker_history.png>)
 
 Uruchomienie kontenera i logi:
 
