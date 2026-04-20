@@ -37,36 +37,76 @@ Zastosowałem wieloetapowe budowanie oraz obraz bazowy Alpine z racji na jego ma
 
 const http = require('http');
 
-const author = "Hubert Szydlowski";
-const port = 8080;
-const startTime = new Date().toLocaleString();
-
-console.log(`Data: ${startTime}`);
-console.log(`Autor: ${author}`);
-console.log(`Port: ${port}`);
-
 const server = http.createServer((req, res) => {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    if (req.url === '/') {
-        res.end(`
-            <h1>Zadanie 1</h1>
-            <p>Autor: ${author}</p>
-            <form action="/pogoda">
-                <select name="city">
-                    <option value="Lublin">Lublin</option>
-                    <option value="Warszawa">Warszawa</option>
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+
+    
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const city = url.searchParams.get('city');
+
+    let weatherInfo = '';
+    if (city) {
+        const temp = Math.floor(Math.random() * 30);
+        weatherInfo = `<h2>Pogoda dla: ${city}</h2><p>Temperatura: ${temp}°C</p><a href="/">Powrót</a>`;
+    } else {
+        weatherInfo = `
+            <form id="weatherForm">
+                <label>Wybierz kraj:</label>
+                <select id="country" onchange="updateCities()">
+                    <option value="">--Wybierz--</option>
+                    <option value="Polska">Polska</option>
+                    <option value="Niemcy">Niemcy</option>
                 </select>
-                <button type="submit">OK</button>
+                <br><br>
+                <label>Wybierz miasto:</label>
+                <select id="city" name="city" disabled>
+                    <option value=""> Najpierw wybierz kraj </option>
+                </select>
+                <br><br>
+                <button type="submit">Sprawdź pogodę</button>
             </form>
-        `);
-    } else if (req.url.startsWith('/pogoda')) {
-        const urlParams = new URL(req.url, `http://${req.headers.host}`);
-        const city = urlParams.searchParams.get('city') || 'Nieznane';
-        res.end(`<h3>Miasto: ${city}</h3><p>Temp: 12 stopni Celsjusza</p><a href="/">Wstecz</a>`);
+
+            <script>
+                const citiesByCountry = {
+                    "Polska": ["Warszawa", "Lublin", "Kraków"],
+                    "Niemcy": ["Berlin", "Monachium", "Hamburg"]
+                };
+
+                function updateCities() {
+                    const countrySelect = document.getElementById('country');
+                    const citySelect = document.getElementById('city');
+                    const selectedCountry = countrySelect.value;
+
+                    citySelect.innerHTML = '';
+                    if (selectedCountry) {
+                        citySelect.disabled = false;
+                        citiesByCountry[selectedCountry].forEach(city => {
+                            let opt = document.createElement('option');
+                            opt.value = city;
+                            opt.innerHTML = city;
+                            citySelect.appendChild(opt);
+                        });
+                    } else {
+                        citySelect.disabled = true;
+                    }
+                }
+            </script>
+        `;
     }
+
+    res.end(`
+        <h1>Aplikacja Pogodowa</h1>
+        <p>Autor: Hubert Szydlowski</p>
+        ${weatherInfo}
+    `);
 });
 
-server.listen(port, '0.0.0.0');
+const PORT = 8080;
+server.listen(PORT, () => {
+    console.log(`Data: ${new Date()}`);
+    console.log(`Autor: Hubert Szydlowski`);
+    console.log(`Port: ${PORT}`);
+});
 
 4. Użyte polecenia:
 
