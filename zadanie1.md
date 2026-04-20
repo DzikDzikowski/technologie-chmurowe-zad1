@@ -24,4 +24,4 @@ CMD ["node", "server.js"]
 ![Docker build](<Docker_build.png>)
 ![Docker images - rozmiar obrazu](<Docker_images.png>)
 ![Docker history - warstwy](<Docker_history.png>)
-![Uruchomienie kontenera](<run.png>)
+![Uruchomienie kontenera i logi](<run.png>)
