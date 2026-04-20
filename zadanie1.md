@@ -2,9 +2,13 @@ Sprawozdanie z zadania 1 Technologie Chmurowe
 
 Autor: Hubert Szydłowski
 
-GitHub Repo: https://github.com/DzikDzikowski/technologie-chmurowe-zad1
+GitHub Repo: 
 
-DockerHub: https://hub.docker.com/repository/docker/hubszy/zadanie1/general
+https://github.com/DzikDzikowski/technologie-chmurowe-zad1
+
+DockerHub: 
+
+https://hub.docker.com/repository/docker/hubszy/zadanie1/general
 
 1. Opis:
 
